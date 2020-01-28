@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListPopupWindow;
 import android.widget.SimpleAdapter;
@@ -76,6 +77,8 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 			return new ArrowIconHolder(inflater.inflate(viewType, parent, false));
 		} else if (viewType == R.layout.breadcrumbs_view_item_text) {
 			return new BreadcrumbItemHolder(inflater.inflate(viewType, parent, false));
+		} else if (viewType == R.layout.breadcrumbs_view_item_home) {
+			return new HomeIconHolder(inflater.inflate(viewType, parent, false));
 		} else {
 			throw new IllegalArgumentException("Unknown view type:" + viewType);
 		}
@@ -100,7 +103,12 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 
 	@Override
 	public int getItemViewType(int position) {
-		return BreadcrumbsUtil.getItemViewType(position);
+		if (position==0) {
+			return R.layout.breadcrumbs_view_item_home;
+		}
+		else {
+			return BreadcrumbsUtil.getItemViewType(position);
+		}
 	}
 
 	class BreadcrumbItemHolder extends ItemHolder<IBreadcrumbItem> {
@@ -136,6 +144,45 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 			);*/
 			button.setTextColor(getAdapterPosition() == getItemCount() - 1 ? parent.getSelectedTextColor()
 					: parent.getTextColor());
+		}
+	}
+
+	class HomeIconHolder extends ItemHolder<IBreadcrumbItem> {
+
+		ImageButton item;
+
+		HomeIconHolder(View itemView) {
+			super(itemView);
+			item = (ImageButton) itemView;
+			// enable touch feedback only for items that have a callback
+			if (callback != null) {
+				item.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						callback.onItemClick(parent, getAdapterPosition() / 2);
+					}
+				});
+			} else {
+				item.setClickable(false);
+			}
+			//button.setTextSize(TypedValue.COMPLEX_UNIT_PX, parent.getTextSize());
+			item.setPadding(parent.getTextPadding(), parent.getTextPadding(), parent.getTextPadding(), parent.getTextPadding());
+//			item.getDrawable().setTint(0xFFFFFFFF);
+		}
+
+		@Override
+		public void setItem(@NonNull IBreadcrumbItem item) {
+			super.setItem(item);
+//			button.setText(item.getSelectedItem().toString());
+			/*button.setTextColor(
+					ViewUtils.getColorFromAttr(getContext(),
+							getAdapterPosition() == getItemCount() - 1
+									? android.R.attr.textColorPrimary : android.R.attr.textColorSecondary)
+			);*/
+			/*
+			button.setTextColor(getAdapterPosition() == getItemCount() - 1 ? parent.getSelectedTextColor()
+																		   : parent.getTextColor());
+			 */
 		}
 	}
 
