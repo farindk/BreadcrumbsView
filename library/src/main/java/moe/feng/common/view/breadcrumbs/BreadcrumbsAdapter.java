@@ -2,6 +2,7 @@ package moe.feng.common.view.breadcrumbs;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -78,7 +79,13 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 		} else if (viewType == R.layout.breadcrumbs_view_item_text) {
 			return new BreadcrumbItemHolder(inflater.inflate(viewType, parent, false));
 		} else if (viewType == R.layout.breadcrumbs_view_item_home) {
-			return new HomeIconHolder(inflater.inflate(viewType, parent, false));
+			if (Build.VERSION.SDK_INT < 21) {
+				// TODO: cannot use vector drawables here. Why? Maybe because we dynamically expand it?
+				return new BreadcrumbItemHolder(inflater.inflate(R.layout.breadcrumbs_view_item_text, parent, false));
+			}
+			else {
+				return new HomeIconHolder(inflater.inflate(viewType, parent, false));
+			}
 		} else {
 			throw new IllegalArgumentException("Unknown view type:" + viewType);
 		}
