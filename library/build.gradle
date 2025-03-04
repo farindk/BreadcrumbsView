@@ -5,8 +5,6 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode rootProject.ext.versionCode
-        versionName rootProject.ext.versionName
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
@@ -18,7 +16,19 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        asan {
+        }
+        ubsan {
+        }
+//        debug {
+//            lintOptions {
+//                enable "deprecation"
+//                enable "unchecked"
+//            }
+//        }
     }
+
+    namespace 'moe.feng.common.view.breadcrumbs'
 }
 
 dependencies {
