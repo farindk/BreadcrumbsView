@@ -29,6 +29,7 @@ android {
     }
 
     namespace 'moe.feng.common.view.breadcrumbs'
+    buildFeatures.buildConfig = true
 }
 
 dependencies {
