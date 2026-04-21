@@ -14,6 +14,7 @@ import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.os.BundleCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 import moe.feng.common.view.breadcrumbs.model.IBreadcrumbItem;
@@ -136,6 +137,7 @@ public class BreadcrumbsView extends FrameLayout {
 	 *
 	 * @param items Target list
 	 */
+	@SuppressWarnings("unchecked")
 	public <E extends IBreadcrumbItem> void updateItems(@NonNull List<E> items) {
 		DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new BreadcrumbsDiffCallback((List<IBreadcrumbItem>)items, mAdapter.getItems()));
 		mAdapter.setItems(items);
@@ -218,6 +220,7 @@ public class BreadcrumbsView extends FrameLayout {
 	 * @return Callback
 	 * @see BreadcrumbsCallback
 	 */
+	@SuppressWarnings("unchecked")
 	public @Nullable <T> BreadcrumbsCallback<T> getCallback() {
 		return mAdapter.getCallback();
 	}
@@ -235,8 +238,8 @@ public class BreadcrumbsView extends FrameLayout {
 	public void onRestoreInstanceState(Parcelable state) {
 		if (state instanceof Bundle) {
             Bundle bundle = (Bundle) state;
-            super.onRestoreInstanceState(bundle.getParcelable(KEY_SUPER_STATES));
-            setItems(bundle.<IBreadcrumbItem>getParcelableArrayList(KEY_BREADCRUMBS));
+            super.onRestoreInstanceState(BundleCompat.getParcelable(bundle, KEY_SUPER_STATES, Parcelable.class));
+            setItems(BundleCompat.getParcelableArrayList(bundle, KEY_BREADCRUMBS, IBreadcrumbItem.class));
             return;
 		}
 		super.onRestoreInstanceState(BaseSavedState.EMPTY_STATE);

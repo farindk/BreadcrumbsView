@@ -51,10 +51,12 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 		DROPDOWN_OFFSET_Y_FIX = parent.getResources().getDimensionPixelOffset(R.dimen.dropdown_offset_y_fix_value);
 	}
 
+	@SuppressWarnings("unchecked")
 	public @NonNull <E extends IBreadcrumbItem> List<E> getItems() {
 		return (List<E>) this.items;
 	}
 
+	@SuppressWarnings("unchecked")
 	public <E extends IBreadcrumbItem> void setItems(@NonNull List<E> items) {
 		this.items = (List<IBreadcrumbItem>) items;
 	}
@@ -97,6 +99,7 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 		onBindViewHolder(holder, position, null);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onBindViewHolder(@NonNull ItemHolder holder, int position, List<Object> payloads) {
 		int viewType = getItemViewType(position);
@@ -246,6 +249,7 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 			popupWindow = new ListPopupWindow(getPopupThemedContext());
 			popupWindow.setAnchorView(imageButton);
 			popupWindow.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+				@SuppressWarnings("unchecked")
 				@Override
 				public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 					if (callback != null) {
