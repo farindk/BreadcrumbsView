@@ -25,6 +25,7 @@ import java.util.Map;
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import moe.feng.common.view.breadcrumbs.model.IBreadcrumbItem;
@@ -200,7 +201,7 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 
 		ArrowIconHolder(View itemView) {
 			super(itemView);
-			Drawable normalDrawable = getContext().getResources().getDrawable(R.drawable.ic_chevron_right_black_24dp);
+			Drawable normalDrawable = ContextCompat.getDrawable(getContext(), R.drawable.ic_chevron_right_black_24dp);
 			Drawable wrapDrawable = DrawableCompat.wrap(normalDrawable);
 			// DrawableCompat.setTint(wrapDrawable, ViewUtils.getColorFromAttr(getContext(), android.R.attr.textColorSecondary));
 			DrawableCompat.setTintList(wrapDrawable, parent.getTextColor());
