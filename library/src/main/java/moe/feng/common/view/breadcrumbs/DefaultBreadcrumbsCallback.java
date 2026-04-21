@@ -10,6 +10,7 @@ import moe.feng.common.view.breadcrumbs.model.IBreadcrumbItem;
  */
 public abstract class DefaultBreadcrumbsCallback<T extends IBreadcrumbItem> implements BreadcrumbsCallback {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onItemClick(BreadcrumbsView view, int position) {
 		if (position == view.getItems().size() - 1) return;
@@ -17,6 +18,7 @@ public abstract class DefaultBreadcrumbsCallback<T extends IBreadcrumbItem> impl
 		this.onNavigateBack((T) view.getItems().get(position), position);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void onItemChange(BreadcrumbsView view, int parentPosition, Object nextItem) {
 		T nextBreadcrumb = (T) view.getItems().get(parentPosition + 1);
