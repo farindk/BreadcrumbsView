@@ -178,23 +178,20 @@ class BreadcrumbsAdapter extends RecyclerView.Adapter<BreadcrumbsAdapter.ItemHol
 			}
 			//button.setTextSize(TypedValue.COMPLEX_UNIT_PX, parent.getTextSize());
 			item.setPadding(parent.getTextPadding(), parent.getTextPadding(), parent.getTextPadding(), parent.getTextPadding());
-//			item.getDrawable().setTint(0xFFFFFFFF);
 		}
 
 		@Override
-		public void setItem(@NonNull IBreadcrumbItem item) {
-			super.setItem(item);
-//			button.setText(item.getSelectedItem().toString());
-			/*button.setTextColor(
-					ViewUtils.getColorFromAttr(getContext(),
-							getAdapterPosition() == getItemCount() - 1
-									? android.R.attr.textColorPrimary : android.R.attr.textColorSecondary)
-			);*/
-			/*
-			button.setTextColor(getAdapterPosition() == getItemCount() - 1 ? parent.getSelectedTextColor()
-																		   : parent.getTextColor());
-			 */
+		public void setItem(@NonNull IBreadcrumbItem newItem) {
+			super.setItem(newItem);
+			// follow the crumb text colors (theme-aware) instead of the
+			// drawable's baked-in black
+			Drawable wrapped = DrawableCompat.wrap(item.getDrawable().mutate());
+			DrawableCompat.setTintList(wrapped,
+					getAdapterPosition() == getItemCount() - 1 ? parent.getSelectedTextColor()
+							: parent.getTextColor());
+			item.setImageDrawable(wrapped);
 		}
+
 	}
 
 	class ArrowIconHolder extends ItemHolder<IBreadcrumbItem> {
